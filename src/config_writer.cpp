@@ -396,11 +396,13 @@ int main(int argc, char **argv) {
     int ab=1;
     string OUT_DIR = ".";
     string outprefix = "esscolor";
-
+    int mem = 1;
     for (auto i = args.begin(); i != args.end(); ++i) {
         if (*i == "-h" || *i == "--help") {
-            cout << "Syntax: ./essColor -p <outprefix> -k <kmer-size> -a <min-abundance> -j <num-threads> -i <Path to input file: list of samples> -o <output directory>" << endl;
+            cout << "Syntax: ./essColor -p <outprefix> -k <kmer-size> -a <min-abundance> -j <num-threads> -i <Path to input file: list of samples> -o <output directory> -m <max-ram-gb>" << endl;
             return 0;
+        } else if (*i == "-m") {
+            mem = std::stoi(*++i);
         } else if (*i == "-k") {
             k = std::stoi(*++i);
         } else if (*i == "-i") {
@@ -432,7 +434,7 @@ int main(int argc, char **argv) {
     config.open("config.yaml");
     write_config("k", to_string(k));
     write_config("ab", to_string(ab));
-    write_config("mem", to_string(100));
+    write_config("mem", to_string(mem));
     write_config_str("unitig", "ggcat");
     write_config_str("ess", "notip");
     write_config_str("option", "");
